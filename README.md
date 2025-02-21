@@ -55,33 +55,6 @@ CREATE TABLE visits (
 );
 ```
 
-## Reporting Queries
-### 1. Total visits per merchandiser (last 30 days)
-```sql
-SELECT merchandiser_id, COUNT(*) AS total_visits
-FROM visits
-WHERE visit_date >= CURRENT_DATE - INTERVAL '30 days'
-GROUP BY merchandiser_id
-ORDER BY total_visits DESC;
-```
-
-### 2. Unvisited stores in the last 60 days
-```sql
-SELECT s.id, s.name, s.location
-FROM stores s
-LEFT JOIN visits v ON s.id = v.store_id
-WHERE v.visit_date IS NULL OR v.visit_date < CURRENT_DATE - INTERVAL '60 days';
-```
-
-### 3. Merchandiser efficiency (visits per day)
-```sql
-SELECT merchandiser_id, COUNT(*) / 30.0 AS avg_visits_per_day
-FROM visits
-WHERE visit_date >= CURRENT_DATE - INTERVAL '30 days'
-GROUP BY merchandiser_id
-ORDER BY avg_visits_per_day DESC;
-```
-
 ## Getting Started
 ### 1. Clone the repository
 ```sh
@@ -97,13 +70,3 @@ cd merchandiser-visit-monitoring
 ### 3. Run queries
 Use `sql/reports.sql` to generate reports.
 
-## Future Enhancements
-- Implement an API for real-time visit tracking.
-- Add a frontend dashboard for visualization.
-- Automate reports with PostgreSQL functions.
-
-## License
-MIT License
-
----
-**Contributors:** Your Name
